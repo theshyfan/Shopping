@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {Ionicons, Fontisto} from "@expo/vector-icons";
 import styles from "./home.style";
 import { Welcome } from "../components";
+import Carousel from "../components/home/Carousel";
 
 const Home = () => {
   return (
@@ -15,8 +16,8 @@ const Home = () => {
           <Text style={styles.location}>Shanghai</Text>
 
           <View style={{  alignItems:"flex-end"}}>
-            <View style={styles.carCount}>
-              <Text style={styles.carNumber}>8</Text>
+            <View style={styles.cartCount}>
+              <Text style={styles.cartNumber}>8</Text>
             </View>
             <TouchableOpacity>
               <Fontisto name="shopping-bag" size={24} />
@@ -26,6 +27,7 @@ const Home = () => {
       </View>
       <ScrollView>
         <Welcome />
+        <Carousel />
       </ScrollView>
     </SafeAreaView>
   );

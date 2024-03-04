@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         fontSize: SIZES.medium,
         color: COLORS.gray
   },
-  carCount: {
+  cartCount: {
         position: "absolute",
         bottom: 16,
         width: 16,

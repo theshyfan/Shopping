@@ -4,8 +4,11 @@ import {Ionicons} from "@expo/vector-icons";
 import { COLORS, SIZES } from "../../constants";
 import { Feather } from "@expo/vector-icons";
 import styles from "./welcome.style";
+import { useNavigation } from "@react-navigation/native";
+
 
 const Welcome = () => {
+  const navigation = useNavigation();
   return (
     <View>
       <View style={styles.container}>
@@ -16,6 +19,7 @@ const Welcome = () => {
           Luxurious Furniture
         </Text>
       </View>
+
       <View style={styles.searchContainer}>
         <TouchableOpacity>
           <Feather name="search" size={24} style={styles.searchIcon} />
@@ -24,16 +28,17 @@ const Welcome = () => {
           <TextInput
             style={styles.searchInput}
             value=""
-            onPressIn={() => {}}
+            onPressIn={() =>navigation.navigate("Search")}
             placeholder="what are you looking for"
           ></TextInput>
         </View>
-      </View>
-      <View>
-        <TouchableOpacity>
+        <View>
+        <TouchableOpacity style={styles.searchBtn}>
           <Ionicons name="camera-outline" size={SIZES.xLarge} color={COLORS.offwhite}/>
         </TouchableOpacity>
       </View>
+      </View>
+      
     </View>
   );
 };
