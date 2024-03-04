@@ -1,8 +1,9 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, TextInput } from "react-native";
 import React from "react";
-import styles from "./welcome.style";
+import {Ionicons} from "@expo/vector-icons";
 import { COLORS, SIZES } from "../../constants";
-import {Feather} from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
+import styles from "./welcome.style";
 
 const Welcome = () => {
   return (
@@ -17,7 +18,20 @@ const Welcome = () => {
       </View>
       <View style={styles.searchContainer}>
         <TouchableOpacity>
-           <Feather name="search" size={24}/>
+          <Feather name="search" size={24} style={styles.searchIcon} />
+        </TouchableOpacity>
+        <View style={styles.searchWrapper}>
+          <TextInput
+            style={styles.searchInput}
+            value=""
+            onPressIn={() => {}}
+            placeholder="what are you looking for"
+          ></TextInput>
+        </View>
+      </View>
+      <View>
+        <TouchableOpacity>
+          <Ionicons name="camera-outline" size={SIZES.xLarge} color={COLORS.offwhite}/>
         </TouchableOpacity>
       </View>
     </View>
