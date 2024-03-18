@@ -26,7 +26,7 @@ const Search = () => {
         </View>
         <View>
           <TouchableOpacity style={styles.searchBtn}>
-            <Feather name="search" size={24} color={COLORS.offwhite} />
+            <Feather name="search" size={24} color={COLORS.offwhite}/>
           </TouchableOpacity>
         </View>
       </View>

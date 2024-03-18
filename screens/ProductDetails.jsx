@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import { Ionicons, SimpleLineIcons, MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import styles from "./ProductDetails.style";
 import { SIZES, COLORS } from "../constants";
+import { useRoute } from "@react-navigation/native";
 
 const ProductDetails = ({ navigation }) => {
+  const route = useRoute();
+  const {item} = route.params;
   const [count, setCount] = useState(1);
 
   const increment = () => {
@@ -29,16 +32,16 @@ const ProductDetails = ({ navigation }) => {
       </View>
       <Image
         source={{
-          uri: "https://qny.smzdm.com/202205/26/628f24408a77c529.jpg_a640.jpg",
+          uri: item.imageUrl,
         }}
         style={styles.image}
       />
 
       <View style={styles.details}>
         <View style={styles.titleRow}>
-          <Text style={styles.title}>Product</Text>
+          <Text style={styles.title}>{item.title}</Text>
           <View style={styles.priceWrapper}>
-            <Text style={styles.price}>$ 232</Text>
+            <Text style={styles.price}>{item.price}</Text>
           </View>
         </View>
 
@@ -64,8 +67,7 @@ const ProductDetails = ({ navigation }) => {
         <View style={styles.descriptionWrapper}>
           <Text style={styles.description}>Description</Text>
           <Text style={styles.descText}>
-          待到秋来九月八，我花开后百花杀。
-          冲天香阵透长安，满城尽带黄金甲。
+          {item.description}
           </Text>
         </View>
 
@@ -73,7 +75,7 @@ const ProductDetails = ({ navigation }) => {
               <View style={styles.location}>
                 <View style={{flexDirection:'row', alignItems:"center"}}>
                   <Ionicons name='location-outline' size={20} />
-                  <Text>Los Angeles</Text>
+                  <Text>{item.product_location}</Text>
                 </View>
                 
                 <View style={{flexDirection:'row', alignItems:"center"}}>
