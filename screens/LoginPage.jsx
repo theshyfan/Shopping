@@ -31,6 +31,7 @@ const LoginPage = ({ navigation }) => {
   const [responseData, setResponseData] = useState(null);
   const [obsecureText, setObsecureText] = useState(false);
 
+
   const inValidForm = () => {
     Alert.alert("Invalid Input", "Please provide all required fields", [
       {
@@ -57,7 +58,9 @@ const LoginPage = ({ navigation }) => {
 
         await AsyncStorage.setItem(`user${response.data._id}`, JSON.stringify(response.data))
         await AsyncStorage.setItem('id', JSON.stringify(response.data._id))
+        await AsyncStorage.setItem('token', JSON.stringify(response.data.token))
         navigation.replace("Bottom Navigation");
+        
       } else {
         Alert.alert("Error Login", "Please provide valid credentials", [
           {
@@ -68,7 +71,6 @@ const LoginPage = ({ navigation }) => {
         ]);
       }
     } catch (error) {
-      console.log(responseData)
       console.log(error)
       Alert.alert("Error", "Oops, Error logging in, try again with correct credentials", [
         {

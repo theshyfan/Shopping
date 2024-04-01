@@ -1,14 +1,17 @@
 import { TouchableOpacity, Text, View, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons, SimpleLineIcons, MaterialCommunityIcons, Fontisto } from "@expo/vector-icons";
 import styles from "./ProductDetails.style";
 import { SIZES, COLORS } from "../constants";
 import { useRoute } from "@react-navigation/native";
+import addToCart from "../hook/AddToCart";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ProductDetails = ({ navigation }) => {
   const route = useRoute();
   const {item} = route.params;
   const [count, setCount] = useState(1);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const increment = () => {
     setCount(count + 1);
@@ -19,6 +22,41 @@ const ProductDetails = ({ navigation }) => {
       setCount(count - 1);
     }
   };
+
+  useEffect(()=> {
+    checkUser();
+  }, [isLoggedIn])
+
+  const checkUser = async () => {
+    try {
+      const id = await AsyncStorage.getItem('id')
+      console.log("4id", id)
+      if(id !== null){
+        setIsLoggedIn(true)
+        console.log("5login",isLoggedIn)
+      }else{
+        console.log('user not logged in')
+      }
+    }catch(error){
+      console.log("Check user happens error" , error)
+    }
+  }
+
+  const handlePress = () => {
+    if(!isLoggedIn){
+      navigation.navigate('LoginPage')
+    }
+  }
+  const handleBuy = () => {
+    if(!isLoggedIn){
+      navigation.navigate('LoginPage')
+    }
+  }
+  const handleCart = () => {
+    if(!isLoggedIn){
+      navigation.navigate('LoginPage')
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.upperRow}>
@@ -26,7 +64,8 @@ const ProductDetails = ({ navigation }) => {
           <Ionicons name="chevron-back-circle" size={30} />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => handlePress()}
+          >
           <Ionicons name="heart" size={30} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
@@ -86,13 +125,18 @@ const ProductDetails = ({ navigation }) => {
         </View>
         
         <View style={styles.cartRow}>
-          <TouchableOpacity style={styles.cartBtn} onPress={() => {}}>
+          <TouchableOpacity style={styles.cartBtn} onPress={() => handleBuy()}>
               <Text style={styles.cartTitle}>BUY NOW</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.addCart} onPress={() => {}}>
-              <Fontisto name="shopping-bag" size={22} color={COLORS.lightWhite} />
-          </TouchableOpacity>
+          <View style={{  alignItems:"flex-end" ,marginRight: 30}}>
+            <View style={styles.cartCount}>
+              <Text style={styles.cartNumber}>10</Text>
+            </View>
+            <TouchableOpacity>
+              <Fontisto name="shopping-bag" size={24} onPress={() => handleCart()}/>
+            </TouchableOpacity>
+          </View>
         </View>
 
 

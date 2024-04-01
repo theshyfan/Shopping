@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
   cartBtn: {
     width: SIZES.width * 0.7,
     backgroundColor: COLORS.black,
-    padding: SIZES.small/2,
+    padding: SIZES.small / 2,
     borderRadius: SIZES.large,
     marginLeft: 12,
   },
-  cartTitle:{
-        marginLeft:SIZES.small,
-        fontFamily:"semibold",
-        fontSize:SIZES.medium,
-        color:COLORS.lightWhite
+  cartTitle: {
+    marginLeft: SIZES.small,
+    fontFamily: "semibold",
+    fontSize: SIZES.medium,
+    color: COLORS.lightWhite,
   },
   titleRow: {
     marginHorizontal: 20,
@@ -111,15 +111,32 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     borderRadius: SIZES.large,
   },
-  addCart:{
-        width:37,
-        height:37,
-        borderRadius: 50,
-        margin: SIZES.small,
-        backgroundColor: COLORS.black,
-        alignItems:"center",
-        justifyContent: "center"
-  }
+  addCart: {
+    width: 37,
+    height: 37,
+    borderRadius: 50,
+    margin: SIZES.small,
+    backgroundColor: COLORS.black,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cartCount: {
+    position: "absolute",
+    bottom: 16,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    backgroundColor: "green",
+    justifyContent: "center",
+    zIndex: 999,
+  },
+  cartNumber: {
+    fontFamily: "regular",
+    fontWeight: "600",
+    fontSize: 10,
+    color: COLORS.lightWhite,
+  },
 });
 
 export default styles;
