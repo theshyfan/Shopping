@@ -8,11 +8,47 @@ import {
   MaterialCommunityIcons,
   SimpleLine,
 } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
   const [userLogin, setUserLogin] = useState(false);
   const LOGIN_TEXT = "L O G I N     "
+
+  useEffect(() => {
+    checkExistingUser();
+  }, [])
+
+  const checkExistingUser = async()=>{
+    const id = await AsyncStorage.getItem('id')
+    const userId = `user${JSON.parse(id)}`
+
+    try{
+      const currentUserData =await AsyncStorage.getItem(userId);
+      
+      if(currentUserData !== null){
+        const parseData = JSON.parse(currentUserData)
+        console.log(parseData)
+        setUserData(parseData)
+        setUserLogin(true)
+      }else{
+        navigation.navigate('LoginPage')
+      }
+    }catch(error){
+      console.log("Error retieving the data:", error)
+    }
+  }
+
+  const userLogout = async() => {
+    const id = await AsyncStorage.getItem('id')
+    const userId = `user${JSON.parse(id)}`
+    try {
+      await AsyncStorage.multiRemove([userId, 'id'])
+      navigation.replace("Bottom Navigation")
+    }catch(error){
+      console.log("Error loggin out the user", error)
+    }
+  }
 
   const logout = () => {
     Alert.alert("Logout", "Are you sure you want to logout", [
@@ -22,7 +58,7 @@ const Profile = ({ navigation }) => {
       },
       {
         text: "Continue",
-        onPress: () => console.log("logout pressed"),
+        onPress: () => userLogout(),
       },
       {defaultIndex: 1}
     ]);
@@ -76,7 +112,7 @@ const Profile = ({ navigation }) => {
             style={styles.profile}
           />
           <Text style={styles.name}>
-            {userLogin === true ? "testName" : "Please login into your account"}
+            {userLogin === true ? `${userData.username}` : "Please login into your account"}
           </Text>
           {userLogin === false ? (
             <TouchableOpacity onPress={() => navigation.navigate("LoginPage")}>
@@ -86,7 +122,7 @@ const Profile = ({ navigation }) => {
             </TouchableOpacity>
           ) : (
             <View style={styles.loginBtn}>
-              <Text style={styles.menuText}>test@163.com </Text>
+              <Text style={styles.menuText}>{userData.email}    </Text>
             </View>
           )}
 
