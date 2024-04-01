@@ -46,4 +46,4 @@ const fetchCart = async () => {
   return {data, loading, error, refetch}
 };
 
-export default fetchCart;
+export default fetchCart

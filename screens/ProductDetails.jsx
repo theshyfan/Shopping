@@ -12,6 +12,7 @@ const ProductDetails = ({ navigation }) => {
   const {item} = route.params;
   const [count, setCount] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [favorites, setFavorites] = useState(false);
 
   const increment = () => {
     setCount(count + 1);
@@ -25,6 +26,7 @@ const ProductDetails = ({ navigation }) => {
 
   useEffect(()=> {
     checkUser();
+    checkFavorites();
   }, [isLoggedIn])
 
   const checkUser = async () => {
@@ -42,9 +44,63 @@ const ProductDetails = ({ navigation }) => {
     }
   }
 
+  const addToFavorites = async() => {
+    const id = await AsyncStorage.getItem('id')
+    const favoritesId = `favorites${JSON.parse(id)}`
+
+    let productId = item._id;
+    let productObj ={
+      title: item.title,
+      id: item._id,
+      supplier: item.supplier,
+      price: item.price,
+      imageUrl: item.imageUrl,
+      product_location: item.product_location
+    }
+
+    try {
+      const existingItem = await AsyncStorage.getItem(favoritesId)
+      let favoriteObj = existingItem ? JSON.parse(existingItem) : {}
+
+      if(favoriteObj[productId]){
+        delete favoriteObj[productId]
+        setFavorites(false)
+      }else{
+        favoriteObj[productId] = productObj;
+        setFavorites(true)
+      }
+
+      await AsyncStorage.setItem(favoritesId, JSON.stringify(favoriteObj))
+    }catch(error){
+      console.log("Add to Favorites happens error",error)
+    }
+  }
+
+  const checkFavorites = async() => {
+    const id = await AsyncStorage.getItem("id")
+    const favoritesId = `favorites${JSON.parse(id)}`
+    console.log(favoritesId)
+
+    try{
+      const favoriteObj = await AsyncStorage.getItem(favoritesId);
+      if(favoriteObj !== null){
+        const favorites = JSON.parse(favoriteObj)
+
+        if(favorites[item._id]){
+          console.log(item._id)
+          setFavorites(true)
+        }
+      }
+    }catch(error){
+      console.log("checkFavorites Error", error)
+    }
+  }
+
   const handlePress = () => {
     if(!isLoggedIn){
       navigation.navigate('LoginPage')
+    }else{
+      addToFavorites()
     }
   }
   const handleBuy = () => {
@@ -66,7 +122,7 @@ const ProductDetails = ({ navigation }) => {
 
         <TouchableOpacity onPress={() => handlePress()}
           >
-          <Ionicons name="heart" size={30} color={COLORS.primary} />
+          <Ionicons name={favorites ? "heart" : "heart-outline"} size={30} color={COLORS.primary} />
         </TouchableOpacity>
       </View>
       <Image
