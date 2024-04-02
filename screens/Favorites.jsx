@@ -37,7 +37,6 @@ const Favorites = ({ navigation }) => {
   const checkFavorites = async () => {
     const id = await AsyncStorage.getItem("id");
     const favoritesId = `favorites${JSON.parse(id)}`;
-    console.log(favoritesId);
 
     try {
       const favoriteObj = await AsyncStorage.getItem(favoritesId);
@@ -45,7 +44,7 @@ const Favorites = ({ navigation }) => {
         const favorites = JSON.parse(favoriteObj);
         const favList = Object.values(favorites);
         setFavData(favList);
-        console.log(favList.length);
+        console.log("FavList length is total: ",favList.length);
       }
     } catch (error) {
       console.log("checkFavorites Error", error);

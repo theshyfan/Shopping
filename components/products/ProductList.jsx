@@ -8,7 +8,6 @@ import styles from "./ProductList.style";
 
 const ProductList = () => {
   const { data, isLoading, error } = useFetch();
-  console.log(data)
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>

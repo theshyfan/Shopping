@@ -79,7 +79,6 @@ const ProductDetails = ({ navigation }) => {
   const checkFavorites = async() => {
     const id = await AsyncStorage.getItem("id")
     const favoritesId = `favorites${JSON.parse(id)}`
-    console.log(favoritesId)
 
     try{
       const favoriteObj = await AsyncStorage.getItem(favoritesId);

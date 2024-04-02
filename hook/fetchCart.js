@@ -1,15 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
-const fetchCart = async () => {
+const fetchCart = () => {
   const [data, setData] = useState([]);
   const [loading, setLoader] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
+  async function fetchData() {
     setLoader(true);
     const token = await AsyncStorage.getItem("token");
-
     try {
       const endpoint = "http://192.168.1.2:3001/api/cart/find";
 
@@ -19,12 +19,10 @@ const fetchCart = async () => {
       };
 
       const response = await axios.get(endpoint, { headers });
-      const newData = JSON.stringify(response.data);
-      const parseData = JSON.parse(newData)
-      const products = parseData[0].products;
+      const cartProducts = response.data[0].products;
 
-      await AsyncStorage.setItem('cartCount', JSON.stringify(products.length))
-      setData(products)
+      await AsyncStorage.setItem('cartCount', JSON.stringify(cartProducts.length))
+      setData(cartProducts)
       setLoader(false)
 
     } catch (error) {
