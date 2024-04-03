@@ -14,7 +14,7 @@ const Button = ({ title, onPress, isValid, loader }) => {
       onPress={onPress}
       style={styles.btnStyle(isValid === false ? COLORS.gray : COLORS.primary)}
     >
-      {loader ===false? (
+      {loader ===false ? (
         <Text style={styles.btnTxt}>{title}</Text>
       ) : (
         <ActivityIndicator />
